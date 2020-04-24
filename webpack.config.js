@@ -17,7 +17,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: "/.js$/",
+        test: /\.js$/,
         use: {
           loader: "babel-loader",
           options: {
@@ -26,8 +26,12 @@ module.exports = {
         },
       },
       {
-        test: "/.css$/",
+        test: /\.css$/,
         use: ["style-loader", "css-loader"],
+      },
+      {
+        test: /\.md$/,
+        use: ["html-loader", "./markdown-loader.js"],
       },
     ],
   },

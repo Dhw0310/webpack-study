@@ -1,4 +1,8 @@
 import creatHeading from "./heading.js";
+import "./main.css";
+import about from "./about.md";
+console.log(about);
+
 class Test {
   constructor(name, age) {
     this.name = name;

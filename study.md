@@ -40,23 +40,28 @@ import { Configuration } from 'webpack'
 
 3.  loader >Webpack 内部默认只能够处理 JS 模块代码，也就是说在打包过程中，它默认把所有遇到的文件都当作 JavaScript 代码进行解析,因此需要 loader 转换
 
-          * css-loader 安装 `npm install css-loader --save-dev`
-          * 配置
-          ```
-          module: {
-            rules: [
-              {
-                test: '/\.css/' // 根据打包过程中所遇到文件路径匹配是否使用这个 loader
-                use: 'css-loader'
-              }
-            ]
-          }
-          ```
-          * css-loader 只会把 CSS 模块加载到 JS 代码中，而并不会使用这个模块。<br>
-          * style-loader 的作用,将 css-loader 中加载的所有样式模块，通过创建style标签的方式添加到页面上
+- css-loader 安装 `npm install css-loader --save-dev`
+- 配置
 
-    css - css-loader - webpack - bundle.js
-    TIPS: 一旦配置多个 loader，执行顺序是从后向前执行
+  ```
+  module: {
+    rules: [ { test: '/\.css/' // 根据打包过程中所遇到文件路径匹配是否使用这个
+    loader use: 'css-loader' } ] }
+  ```
+
+  - css-loader 只会把 CSS 模块加载到 JS 代码中，而并不会使用这个模块。<br>
+  - style-loader 的作用,将 css-loader 中加载的所有样式模块，通过创建 style 标签的方式添加到页面上
+
+        css - css-loader - webpack - bundle.js
+        TIPS: 一旦配置多个 loader，执行顺序是从后向前执行
+
+  > 每个 webpack 的 loader 都需要导出一个函数，这个函数就是我们 loader 对资源的处理过程，它的输入就是加载到的文件内容，输出的是我们加工过后的结果。markdown-loader.js 的作用
+
+  - use 不仅能使用模块名称，也可以使用模块文件路径，这点和 node 的 require 函数一样
+  - webpack 加载资源过程类似于一个工作管道，你可以在过程中使用多个 loader，但是结果必须是 js 代码字符串
+    因此上述问题解决方案有两种
+    - 直接在这个 loader 中返回一段 js 代码字符串
+    - 再找一个合适的加载器，在后面处理我们得到的结果
 
 ### 执行逻辑简介
 
